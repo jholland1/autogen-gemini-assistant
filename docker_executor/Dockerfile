@@ -18,4 +18,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN useradd app
 USER app
 
-CMD /bin/bash
+CMD ["/bin/bash"]
