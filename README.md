@@ -1,7 +1,5 @@
 # AutoGen Gemini Assistant
 
-**Note: These instructions are tailored for Windows OS.**
-
 This repository contains an AutoGen-based assistant that leverages the Gemini model for various tasks. It includes configurations for both local execution and Dockerized environments.
 
 ## Table of Contents
@@ -87,15 +85,4 @@ The `main.py` script demonstrates the core functionality of the AutoGen assistan
 2.  **Run the script:**
     ```bash
     python app/main.py
-    ```
-
-### Running `gemini_mwe_test.py`
-
-The `gemini_mwe_test.py` script is a minimal working example to test the Gemini API integration.
-
-1.  **Ensure your `.env` file is configured** with `GEMINI_API_KEY`.
-
-2.  **Run the script:**
-    ```bash
-    python app/gemini_mwe_test.py
     ```
