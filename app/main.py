@@ -135,7 +135,8 @@ async def main():
         to search for relevant examples, algorithms, existing python repositories, etc. to improve your requirements specification. 
         Do not write any code. If you need information from the user, you must first send your message, then you can handoff to the user.
         State the final specification and detailed requirements and then handoff to the python_coder. After sending your message handoff 
-        to python_coder.
+        to python_coder. Only transfer to user if absolutely necessary, use the tools available to you first. If you do transfer to user, use 
+        the tool 'transfer_to_user' to do so.
         """,
         handoffs=["python_coder","user"],
         tools=[fetch_url_content_tool,google_search_tool],
@@ -153,7 +154,7 @@ async def main():
         Ensure that the code you write will terminate when complete and save require output. Do not expect user interaction to view results 
         (i.e. save plots as png, don't terminate with plt.show()). 
         Execute the code using the 'python_code_execution_tool' tool, if it runs successfully return the std_out messages and handoff to the results_evaluator, 
-        if it fails return std_out and std_err and handoff to the code_debugger. Only handoff to results_evaluator or code_debugger, DO NOT handoff to user.
+        if it fails return std_out and std_err and handoff to the code_debugger. Only transfer to results_evaluator or code_debugger, DO NOT handoff to user, DO NOT attempt to ask the user a new question.
         """,
         model_client=model_client,
         handoffs=["results_evaluator","code_debugger"],
@@ -177,8 +178,8 @@ async def main():
         name="results_evaluator",
         system_message="""You are a helpful critical evaluator of python script performance. You will receive output from a Python script
         and you will critically evaluate it against its specified requirements. If the script meets requirements, you will pass control and hand off to 
-        the user. If the code does not meet requirements please explain the requirement that is not met and why it was not met, and 
-        handoff to the requirements_analyst for revision of specifications.
+        the user by using the 'transfer_to_user' tool, when the user provides you with a new requirement, transfer to the requirements analyst. If the code does not meet requirements please explain the requirement that is not met and why it was not met, and 
+        handoff to the requirements_analyst for revision of specifications. 
         """,
         handoffs=["user","requirements_analyst"],
         model_client=model_client,
