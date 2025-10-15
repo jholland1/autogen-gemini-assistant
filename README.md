@@ -1,6 +1,6 @@
 # AutoGen Gemini Assistant
 
-This repository contains an AutoGen-based assistant that leverages the Gemini model for various tasks. It includes configurations for both local execution and Dockerized environments.
+This repository contains an AutoGen-based assistant team that leverages the Gemini models to take a user prompt to generate code requirements, research solutions using web search, write python code, execute python scripts in a local Docker sandbox, analyze results, and debug.
 
 ## Table of Contents
 - [Local Environment Setup](#local-environment-setup)
@@ -8,7 +8,6 @@ This repository contains an AutoGen-based assistant that leverages the Gemini mo
 - [Docker Container Setup](#docker-container-setup)
 - [Running the Code](#running-the-code)
   - [Running `main.py`](#running-mainpy)
-  - [Running `gemini_mwe_test.py`](#running-gemini_mwe_testpy)
 
 ## Local Environment Setup
 
