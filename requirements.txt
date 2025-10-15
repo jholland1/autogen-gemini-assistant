@@ -1,0 +1,10 @@
+autogen
+autogen-core
+autogen-agentchat
+autogen-ext[openai,docker,ollama]
+python-dotenv
+# gradio
+streamlit
+# tavily-python
+ag2[gemini]
+bs4
