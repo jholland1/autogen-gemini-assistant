@@ -222,30 +222,6 @@ async def main():
         reflect_on_tool_use=True,
     )
 
-    # code_debugger = AssistantAgent( #python_coder seems to debug itself when reflect_on_tool_use=True, not sure this is necessary.
-    #     name="code_debugger",
-    #     system_message="""You are a debugging expert. Analyze code output and execution errors (if any) and provide specific, 
-    #     targeted fixes (if needed). Do not rewrite the entire script. Direct your fix to the python_coder. If requirements clarification
-    #     is required to resolve an error, request requirements clarification by sending your message and calling the handoff to the requirements_analyst.
-    #     If you encounter an error that is difficult to resolve, use the 'google_search_tool' tool to search the web for solutions to the
-    #     error.
-    #     """,
-    #     handoffs=["python_coder","requirements_analyst","google_search_tool"],
-    #     model_client=model_client,
-    # )
-
-    # results_evaluator = AssistantAgent(
-    #     name="results_evaluator",
-    #     system_message="""You are a helpful critical evaluator of python script performance. You will receive output from a Python script
-    #     and you will critically evaluate it against its specified requirements. If the script meets requirements, you will pass control and hand off to 
-    #     the user by using the 'transfer_to_user' tool, when the user provides you with a new requirement, transfer to the requirements analyst. If the code does not meet requirements please explain the requirement that is not met and why it was not met, and 
-    #     handoff to the requirements_analyst for revision of specifications. 
-    #     """,
-    #     handoffs=["user","requirements_analyst"],
-    #     model_client=model_client,
-    # )
-
-
     # --- TEAM SETUP (RoundRobinGroupChat) ---
     # termination_condition = MaxMessageTermination(max_messages=20) | TextMentionTermination("APPROVE")
     termination = HandoffTermination(target="user") | TextMentionTermination("TERMINATE")
