@@ -149,48 +149,49 @@ async def main():
     python_coder = AssistantAgent(
         name="python_coder",
         system_message=""""You are an expert Python programmer. Write a complete, executable Python script based on the 
-        requirements and research. Ensure your code is well-commented. If necessary, perform a Google search using the 'google_search_tool'
+        requirements and research. Ensure your code is well-commented. If necessary, perform a Google search using the 'google_search_tool' tool
         to retreive relevant code examples to use in the script to meet specified requirements.
         Ensure that the code you write will terminate when complete and save require output. Do not expect user interaction to view results 
-        (i.e. save plots as png, don't terminate with plt.show()). 
-        Execute the code using the 'python_code_execution_tool' tool, if it runs successfully return the std_out messages and handoff to the results_evaluator, 
-        if it fails return std_out and std_err and handoff to the code_debugger. Only transfer to results_evaluator or code_debugger, DO NOT handoff to user, DO NOT attempt to ask the user a new question.
+        (i.e. save plots as png, don't terminate with plt.show()). DO NOT ask the user for more information before writing the code. All required information was provided by the requirements analyst.
+        If you need more information, research it yourself using the 'google_search_tool' tool. Do not ask the user for more information.
+        Execute the code using the 'python_code_execution_tool' tool, if it runs successfully return the std_out messages and handoff to the user using the 'transfer_to_user' tool.
+        if it fails debug the code and try again. if it succeeds return the results and handoff to the user.
         """,
         model_client=model_client,
-        handoffs=["results_evaluator","code_debugger"],
+        handoffs=["user","requirements_analyst"],
         tools=[python_code_execution_tool, google_search_tool],
         reflect_on_tool_use=True,
     )
 
-    code_debugger = AssistantAgent( #python_coder seems to debug itself when reflect_on_tool_use=True, not sure this is necessary.
-        name="code_debugger",
-        system_message="""You are a debugging expert. Analyze code output and execution errors (if any) and provide specific, 
-        targeted fixes (if needed). Do not rewrite the entire script. Direct your fix to the python_coder. If requirements clarification
-        is required to resolve an error, request requirements clarification by sending your message and calling the handoff to the requirements_analyst.
-        If you encounter an error that is difficult to resolve, use the 'google_search_tool' tool to search the web for solutions to the
-        error.
-        """,
-        handoffs=["python_coder","requirements_analyst","google_search_tool"],
-        model_client=model_client,
-    )
+    # code_debugger = AssistantAgent( #python_coder seems to debug itself when reflect_on_tool_use=True, not sure this is necessary.
+    #     name="code_debugger",
+    #     system_message="""You are a debugging expert. Analyze code output and execution errors (if any) and provide specific, 
+    #     targeted fixes (if needed). Do not rewrite the entire script. Direct your fix to the python_coder. If requirements clarification
+    #     is required to resolve an error, request requirements clarification by sending your message and calling the handoff to the requirements_analyst.
+    #     If you encounter an error that is difficult to resolve, use the 'google_search_tool' tool to search the web for solutions to the
+    #     error.
+    #     """,
+    #     handoffs=["python_coder","requirements_analyst","google_search_tool"],
+    #     model_client=model_client,
+    # )
 
-    results_evaluator = AssistantAgent(
-        name="results_evaluator",
-        system_message="""You are a helpful critical evaluator of python script performance. You will receive output from a Python script
-        and you will critically evaluate it against its specified requirements. If the script meets requirements, you will pass control and hand off to 
-        the user by using the 'transfer_to_user' tool, when the user provides you with a new requirement, transfer to the requirements analyst. If the code does not meet requirements please explain the requirement that is not met and why it was not met, and 
-        handoff to the requirements_analyst for revision of specifications. 
-        """,
-        handoffs=["user","requirements_analyst"],
-        model_client=model_client,
-    )
+    # results_evaluator = AssistantAgent(
+    #     name="results_evaluator",
+    #     system_message="""You are a helpful critical evaluator of python script performance. You will receive output from a Python script
+    #     and you will critically evaluate it against its specified requirements. If the script meets requirements, you will pass control and hand off to 
+    #     the user by using the 'transfer_to_user' tool, when the user provides you with a new requirement, transfer to the requirements analyst. If the code does not meet requirements please explain the requirement that is not met and why it was not met, and 
+    #     handoff to the requirements_analyst for revision of specifications. 
+    #     """,
+    #     handoffs=["user","requirements_analyst"],
+    #     model_client=model_client,
+    # )
 
 
     # --- TEAM SETUP (RoundRobinGroupChat) ---
     # termination_condition = MaxMessageTermination(max_messages=20) | TextMentionTermination("APPROVE")
     termination = HandoffTermination(target="user") | TextMentionTermination("TERMINATE")
 
-    agent_team = [requirements_analyst, python_coder, code_debugger, results_evaluator] 
+    agent_team = [requirements_analyst, python_coder] 
 
     team=Swarm(agent_team, termination_condition=termination)
 
