@@ -1,6 +1,6 @@
 # AutoGen Gemini Assistant
 
-This repository contains an AutoGen-based assistant team that leverages the Gemini models to take a user prompt to generate code requirements, research solutions using web search, write python code, execute python scripts in a local Docker sandbox, analyze results, and debug.
+This repository contains an AutoGen-based assistant team that leverages the Gemini models to take a user prompt to generate code requirements, research solutions using web search, write python code, execute python scripts in a local Docker sandbox, read existing python files, analyze results, and debug.
 
 ## Table of Contents
 - [Local Environment Setup](#local-environment-setup)
@@ -8,6 +8,7 @@ This repository contains an AutoGen-based assistant team that leverages the Gemi
 - [Docker Container Setup](#docker-container-setup)
 - [Running the Code](#running-the-code)
   - [Running `main.py`](#running-mainpy)
+- [Working with Agents and Directories](#working-with-agents-and-directories)
 
 ## Local Environment Setup
 
@@ -85,3 +86,9 @@ The `main.py` script demonstrates the core functionality of the AutoGen assistan
     ```bash
     python app/main.py
     ```
+
+## Working with Agents and Directories
+
+-   **Code Output:** Any code executed by the agents will save its output (e.g., generated files, plots) into the `coding_output` directory.
+
+-   **Existing Code for Agents:** If you want the agents to modify, analyze, or use existing Python code, place these `.py` files into a directory named `existing_code` in the root of the project. The agents are configured to access and read files from this directory.
