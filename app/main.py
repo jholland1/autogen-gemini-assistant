@@ -20,6 +20,8 @@ from autogen_agentchat.conditions import HandoffTermination, TextMentionTerminat
 from autogen_agentchat.messages import HandoffMessage
 from autogen_core.models import ModelInfo
 from autogen_core.tools import FunctionTool
+from docker.types import DeviceRequest
+
 
 import time
 import requests
@@ -158,7 +160,8 @@ async def main():
         image="autogen-executor:latest",
         timeout=3000,
         work_dir="coding_output",
-        stop_container=False
+        stop_container=False,
+        device_requests=[DeviceRequest(count=-1, capabilities=[["gpu"]])]
     )
     await executor.start()
 
