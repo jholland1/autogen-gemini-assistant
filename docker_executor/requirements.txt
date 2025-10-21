@@ -9,3 +9,5 @@ tqdm
 yfinance
 chronos-forecasting
 chronos-forecasting[dev]
+autogluon
+autogluon.timeseries

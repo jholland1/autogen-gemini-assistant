@@ -12,14 +12,7 @@ dependencies = [
     "autogen-ext[docker,ollama,openai]>=0.7.5",
     "bs4>=0.0.2",
     "python-dotenv>=1.1.1",
-    "streamlit>=1.50.0",
-    "torch",
-    "torchvision",
     "tqdm>=4.67.1",
-    "yfinance>=0.2.66",
-    "chronos-forecasting>=2.0",
-    "chronos-forecasting[dev]",
-    "pandas[pyarrow]",
 ]
 
 [[tool.uv.index]]
