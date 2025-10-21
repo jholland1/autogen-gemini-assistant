@@ -3,7 +3,7 @@
 
 # Use an official Python runtime as a parent image
 # FROM python:3.12-slim
-FROM nvidia/cuda:12.9.1-cudnn-devel-ubuntu24.04
+FROM nvidia/cuda:13.0.1-cudnn-devel-ubuntu24.04
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -19,6 +19,7 @@ RUN apt-get update && \
 COPY requirements.txt .
 
 # Activate the virtual environment and install dependencies
+RUN pip install torch torchvision --index-url https://download.pytorch.org/whl/cu130 --break-system-packages
 RUN pip install --no-cache-dir -U -r requirements.txt --break-system-packages
 
 # Upgrade pip

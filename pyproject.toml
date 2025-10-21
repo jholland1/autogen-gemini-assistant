@@ -1,0 +1,36 @@
+[project]
+name = "autogen-gemini-assistant"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "ag2[gemini]>=0.9.10",
+    "autogen>=0.9.10",
+    "autogen-agentchat>=0.7.5",
+    "autogen-core>=0.7.5",
+    "autogen-ext[docker,ollama,openai]>=0.7.5",
+    "bs4>=0.0.2",
+    "python-dotenv>=1.1.1",
+    "streamlit>=1.50.0",
+    "torch",
+    "torchvision",
+    "tqdm>=4.67.1",
+    "yfinance>=0.2.66",
+    "chronos-forecasting>=2.0",
+    "chronos-forecasting[dev]",
+    "pandas[pyarrow]",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
+
+[tool.uv.sources]
+torch = [
+  { index = "pytorch-cu130", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]
+torchvision = [
+  { index = "pytorch-cu130", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+]

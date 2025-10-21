@@ -1,3 +1,4 @@
+#torch and torchvision are installed via the base image for GPU support and are available
 pandas
 numpy
 matplotlib
@@ -5,6 +6,6 @@ requests
 beautifulsoup4
 scikit-learn
 tqdm
-autogluon
-# autogluon.tabular[imodels,skex,skl2onnx]
 yfinance
+chronos-forecasting
+chronos-forecasting[dev]

@@ -209,9 +209,10 @@ async def main():
     python_coder = AssistantAgent(
         name="python_coder",
         system_message=""""You are an expert Python programmer. You will receive detailed requirements, existing code (if any), and research
-         to aid in writing and executing a python script. Perform the following steps:
+         to aid in writing and executing a python script. Perform the following steps BEFORE handing off to the user:
         1. Search the web using the 'google_search_tool' for any additional information you need to write the code.
         2. Write a complete, executable Python script based on the requirements and research. Save all output to files in the working directory,
+        it is very important that final results are saved to files in the working directory (no subfolders, save in root of working directory),
         plots and/or animations should be saved as image files, data should be saved in csv files, and enough information should be written
         to the console to catch any errors and undersand the output of the script.
         3. Execute the code using the 'python_code_execution_tool' tool. Always execute the code after writing or modifying it in any way.
